@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Model index{% endblock %}
+
+{% block body %}
+    <h1>Model index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Matter</th>
+                <th>Color</th>
+                <th>Description</th>
+                <th>Mtype</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for model in models %}
+            <tr>
+                <td>{{ model.id }}</td>
+                <td>{{ model.matter }}</td>
+                <td>{{ model.color }}</td>
+                <td>{{ model.description }}</td>
+                <td>{{ model.mtype }}</td>
+                <td>
+                    <a href="{{ path('model_show', {'id': model.id}) }}">show</a>
+                    <a href="{{ path('model_edit', {'id': model.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('model_new') }}">Create new</a>
+{% endblock %}

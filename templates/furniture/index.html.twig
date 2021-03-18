@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Furniture index{% endblock %}
+
+{% block body %}
+    <h1>Furniture index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Inventory_number</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for furniture in furniture %}
+            <tr>
+                <td>{{ furniture.id }}</td>
+                <td>{{ furniture.inventoryNumber }}</td>
+                <td>{{ furniture.price }}</td>
+                <td>{{ furniture.quantity }}</td>
+                <td>
+                    <a href="{{ path('furniture_show', {'id': furniture.id}) }}">show</a>
+                    <a href="{{ path('furniture_edit', {'id': furniture.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('furniture_new') }}">Create new</a>
+{% endblock %}

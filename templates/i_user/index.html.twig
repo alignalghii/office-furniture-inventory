@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}IUser index{% endblock %}
+
+{% block body %}
+    <h1>IUser index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Password</th>
+                <th>Privilege</th>
+                <th>Active</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for i_user in i_users %}
+            <tr>
+                <td>{{ i_user.id }}</td>
+                <td>{{ i_user.name }}</td>
+                <td>{{ i_user.email }}</td>
+                <td>{{ i_user.password }}</td>
+                <td>{{ i_user.privilege }}</td>
+                <td>{{ i_user.active ? 'Yes' : 'No' }}</td>
+                <td>
+                    <a href="{{ path('i_user_show', {'id': i_user.id}) }}">show</a>
+                    <a href="{{ path('i_user_edit', {'id': i_user.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('i_user_new') }}">Create new</a>
+{% endblock %}

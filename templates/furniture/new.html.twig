@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Furniture{% endblock %}
+
+{% block body %}
+    <h1>Create new Furniture</h1>
+
+    {{ include('furniture/_form.html.twig') }}
+
+    <a href="{{ path('furniture_index') }}">back to list</a>
+{% endblock %}

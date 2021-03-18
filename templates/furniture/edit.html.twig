@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Furniture{% endblock %}
+
+{% block body %}
+    <h1>Edit Furniture</h1>
+
+    {{ include('furniture/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('furniture_index') }}">back to list</a>
+
+    {{ include('furniture/_delete_form.html.twig') }}
+{% endblock %}
