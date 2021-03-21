@@ -1,0 +1,7 @@
+label.required::before {
+    content: '*';
+}
+
+label.required {
+    font-weight: bold;
+}
