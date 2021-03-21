@@ -8,6 +8,7 @@ use App\Entity\Furniture;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AppFixtures extends Fixture
 {
@@ -37,6 +38,14 @@ class AppFixtures extends Fixture
     ];
 
 
+    private $passwordEncoder;
+
+    public function __construct(UserPasswordEncoderInterface $passwordEncoder)
+    {
+        $this->passwordEncoder = $passwordEncoder;
+    }
+
+
     public function load(ObjectManager $manager)
     {
         foreach ($this->baseData as $tableName => &$records) {
@@ -59,7 +68,9 @@ class AppFixtures extends Fixture
                         $iuser = new IUser();
                             $iuser->setName($name);
                             $iuser->setEmail($email);
-                            $iuser->setPassword($password);
+                            $iuser->setPassword(
+                                $this->passwordEncoder->encodePassword($iuser, $password)
+                            );
                             $iuser->setPrivilege($privilege);
                             $iuser->setActive($active);
                         $record['__ENTITY'] = $iuser;

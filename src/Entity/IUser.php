@@ -4,11 +4,12 @@ namespace App\Entity;
 
 use App\Repository\IUserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=IUserRepository::class)
  */
-class IUser
+class IUser implements UserInterface
 {
     /**
      * @ORM\Id
@@ -41,6 +42,8 @@ class IUser
      * @ORM\Column(type="boolean", nullable=true)
      */
     private $active;
+
+
 
     public function getId(): ?int
     {
@@ -105,5 +108,51 @@ class IUser
         $this->active = $active;
 
         return $this;
+    }
+
+
+
+    /**
+     * A visual identifier that represents this user.
+     *
+     * @see UserInterface
+     */
+    public function getUsername(): string
+    {
+        return (string) $this->email;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function getRoles(): array
+    {
+        return [$this->getPrivilege() == 'admin' ? 'ROLE_ADMIN' : 'ROLE_USER'];//array_unique($roles);
+    }
+
+    public function setRoles(array $roles): self
+    {
+        $this->setPrivilege = in_array('ROLE_ADMIN', $roles) ? 'admin' : 'plain';
+
+        return $this;
+    }
+
+    /**
+     * This method is not needed for apps that do not check user passwords.
+     *
+     * @see UserInterface
+     */
+    public function getSalt(): ?string
+    {
+        return null;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function eraseCredentials()
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
     }
 }

@@ -1,7 +1,11 @@
 security:
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
-        users_in_memory: { memory: null }
+        # used to reload user from session & other features (e.g. switch_user)
+        app_user_provider:
+            entity:
+                class: App\Entity\IUser
+                property: email
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -9,7 +13,16 @@ security:
         main:
             anonymous: true
             lazy: true
-            provider: users_in_memory
+            provider: app_user_provider
+            form_login:
+                login_path: login
+                check_path: login
+            logout:
+                path: app_logout
+                target: /
+
+            entry_point: App\Security\AuthenticationEntryPoint
+            access_denied_handler: App\Security\AccessDeniedHandler
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
@@ -20,5 +33,15 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+        # '^/$' - No login required for the home
+        # '/lucky' - No login required for  ,,lucky number'' sample functionality doeas need being admin, but does need to log in at least
+        - { path: '^/iuser/$', roles: ROLE_ADMIN } # Listing users is allowed only for admins
+        - { path: '^/iuser/new$', roles: ROLE_USER } # adding a new user (probably him/herself) is allowed for any user, but at least a login is required
+        - { path: '^/iuser/edit$', roles: ROLE_USER } # editing a user (probably him/herself) is allowed for any user, but at least a login is required
+        - { path: '^/iuser/delete$', roles: ROLE_USER } # deleting a user (probably him/herself) is allowed for any user, but at least a login is required @TODO only inactivating is specified
+        - { path: furniture, roles: ROLE_USER } # Any user is allowed to manage furniture, but at least a login is required
+        - { path: model, roles: ROLE_USER } # Any user is allowed to manage model, but at least a login is required
+
+    encoders:
+        App\Entity\IUSer:
+            algorithm: auto

@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Login{% endblock %}
+
+{% block bodyproper %}
+    <h1>Login</h1>
+    <h2>Login form</h2>
+    {% if (error) %}
+        <div class="error">{{ error.messageKey }}</div>
+    {% endif %}
+    <form action="{{ path('login') }}" method="post">
+        <label for="username">Email:</label>
+        <input type="text" id="username" name="_username" value="{{ lastEmail }}"/>
+        <label for="password">Password:</label>
+        <input type="text" id="password" name="_password"/>
+        <input type="submit"/>
+    </form>
+    <h2>Sample login data</h2>
+    <p>The initial fixture&apos; sample login data, one for a plain user, and another for an admin-privileged user.</p>
+    <table>
+        <caption>Test fixture 1:</caption>
+        <tr>
+            <th></th>
+            <th>Email</th>
+            <th>Password</th>
+        </tr>
+        <tr>
+            <th>Plain</th>
+            <td>user46@public.office-furniture.hu</td>
+            <td>hst434232</td>
+        </tr>
+        <tr>
+            <th>Admin</th>
+            <td>admin@dev.office-furniture.hu</td>
+            <td>aDmIn146</td>
+        </tr>
+    </table>
+{% endblock %}

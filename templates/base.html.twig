@@ -8,12 +8,23 @@
         {% block stylesheets %}
             {#{{ encore_entry_link_tags('app') }}#}
         {% endblock %}
+        <link rel="stylesheet" href="css/messages.css"/>
 
         {% block javascripts %}
             {#{{ encore_entry_script_tags('app') }}#}
         {% endblock %}
+        <script src="js/expiring-flash-divs.js"></script>
     </head>
     <body>
-        {% block body %}{% endblock %}
+        {% block body %}
+            {% block flash %}
+                {% for message in app.flashes('note') %}
+                    <div class="flash-note">{{ message }}</div>
+                {% endfor %}
+            {% endblock %}
+            {% block home %}<a href="{{ path('index') }}">Return home</a>{% endblock %}
+            {% block bodyproper %}
+            {% endblock %}
+        {% endblock %}
     </body>
 </html>

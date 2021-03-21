@@ -9,3 +9,12 @@ app_lucky_number:
         max: 100
     requirements:
         max: '\d+'
+
+login:
+    path: /login
+    controller: App\Controller\SecurityController::login
+    methods: GET|POST
+
+app_logout:
+    path: /logout
+    methods: GET
