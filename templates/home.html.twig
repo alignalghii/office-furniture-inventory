@@ -6,7 +6,7 @@
 
 {% block bodyproper %}
         <h1>Office furniture inventory</h1>
-
+        <h2>The inventory</h2>
 {% if is_granted('ROLE_USER') %}
         <ul>
             <li><a class="my" href="{{ path('model_index') }}">Model</a></li>
@@ -15,5 +15,12 @@
             <li><a class="my" href="{{ path('i_user_index') }}">IUser</a></li>
 {% endif %}
         </ul>
+        <h2>Some few explaining words in Hungarian</h2>
+
+        <p>A feladat megfogalmazása szerint bármelyik user szerkesztheti a modelleket, bútorokat, sőt még user hozzáadására, szerkesztésére is jogosult bárki, de a userek listáját csak az adminok érhetik el.</p>
+        <p>Ezt a specifikációt jelen webalkalmazás úgy értelmezi, hogy minden user a <strong>saját maga</strong> profilját szerkesztheti, de mások adatait nem érheti el, és nem is láthatja, viszont mindenkinek szabad új usereket &bdquo;javasolnia&rdquo;, vagyis hozzáadnia (legfeljebb az adminok utólag törlik).</p>
+        <p>Az elküldött webalkalmazás az ennek megfelelő autentikációs és hozzáféréses rendszerrel rendelkezik, továbbá kezeli a jelszavakkal kapcsolatos szokásos különleges eseteket is (elkódolt tárolás, jelszócsere külön esetének kezelése). Minden user lecserélheti saját jelszavát is, amikor profiljának adatait szerkeszti. Ha jelszavát módosítani nem akarja (ami persze alapértelmezés), a jelszó helyén a 0 jelszés áll.</p>
+        <p>A minta-adatbázis-adatai megtekinthetők, ha valaki (egy admin) megnézi az összes user listáját. Persze mivel már ehhez a művelethez is kellene ismerni legalább egy admin adatait, ezért a bejelentkezési űrlap szándékosan megadja a webalkalmazáshoz csatolt teszt-fixture adatkészlet adatai közül egy admin és egy sima felhasználó belépési adatait. Ezzel használatba vehető a webalkalmazás. Ha a használat során ezek a belépési adatok is módosulnak, akkor persze csak a módosult adatokkal lehet belépni, kivéve, ha a teszt-fixture-rel az ember az adatokat újrarakja.</p>
+        <p><strong>Validációt, keresést és lapozást jelen wealkalmazás még nem tartalmaz</strong>. A tesztfixture elvileg megkönníti majd a tesztvezérelt (TDD) fejleszést, egyelőre azonban ilyen sincs, csak a fixture puszta megléte, és használhatósága a szokásos konzoleszközökkel.</p>
 {% endif %}
 {% endblock %}
