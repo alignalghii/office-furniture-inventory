@@ -16,13 +16,15 @@
 {% endif %}
         </ul>
 {% else %}
-        <p>Log in to see the tables of the inventory.</p>
+        <p>Log in to see the tables of the inventory. The login link (buttonlink) is on the top of the page.</p>
 {% endif %}
         <h2>Some few explaining words in Hungarian</h2>
 
         <p>A feladat megfogalmazása szerint bármelyik user szerkesztheti a modelleket, bútorokat, sőt még user hozzáadására, szerkesztésére is jogosult bárki, de a userek listáját csak az adminok érhetik el.</p>
         <p>Ezt a specifikációt jelen webalkalmazás úgy értelmezi, hogy minden user a <strong>saját maga</strong> profilját szerkesztheti, de mások adatait nem érheti el, és nem is láthatja, viszont mindenkinek szabad új usereket &bdquo;javasolnia&rdquo;, vagyis hozzáadnia (legfeljebb az adminok utólag törlik).</p>
         <p>Az elküldött webalkalmazás az ennek megfelelő autentikációs és hozzáféréses rendszerrel rendelkezik, továbbá kezeli a jelszavakkal kapcsolatos szokásos különleges eseteket is (elkódolt tárolás, jelszócsere külön esetének kezelése). Minden user lecserélheti saját jelszavát is, amikor profiljának adatait szerkeszti. Ha jelszavát módosítani nem akarja (ami persze alapértelmezés), a jelszó helyén a 0 jelszés áll.</p>
+        <p>Az autentikáció és hozzáférés-megtagadási háttér viszonylag stabil (ennek szükségével viszont az átlagfelhasználó sima használat során többnyire nem szembesül az erősen testreszabott felületek miatt, de curl-lel vagy más eszközökkel persze mesterségesen elérhetőek nemszokványos forgatókönyvek, elvileg ezeket az alkalmazás védeni tudja és le is kommunikálja).</p>
         <p>A minta-adatbázis-adatai megtekinthetők, ha valaki (egy admin) megnézi az összes user listáját. Persze mivel már ehhez a művelethez is kellene ismerni legalább egy admin adatait, ezért a bejelentkezési űrlap szándékosan megadja a webalkalmazáshoz csatolt teszt-fixture adatkészlet adatai közül egy admin és egy sima felhasználó belépési adatait. Ezzel használatba vehető a webalkalmazás. Ha a használat során ezek a belépési adatok is módosulnak, akkor persze csak a módosult adatokkal lehet belépni, kivéve, ha a teszt-fixture-rel az ember az adatokat újrarakja.</p>
-        <p><strong>Validációt, keresést és lapozást jelen webalkalmazás még nem tartalmaz</strong>. A tesztfixture elvileg megkönníti majd a tesztvezérelt (TDD) fejleszést, egyelőre azonban ilyen sincs, csak a fixture puszta megléte, és használhatósága a szokásos konzoleszközökkel.</p>
+        <p><strong>Validációt, keresést és lapozást jelen webalkalmazás még nem tartalmaz</strong>. A tesztfixture elvileg megkönnyíti majd a tesztvezérelt (TDD) fejlesztést, egyelőre azonban ilyen sincs, csak a fixture puszta megléte, és használhatósága a szokásos konzoleszközökkel.</p>
+        <p></p>
 {% endblock %}

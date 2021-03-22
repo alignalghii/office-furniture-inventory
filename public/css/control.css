@@ -1,4 +1,6 @@
 a.my {
     background-color: pink;
     outline: 1px solid blue;
+    margin-left: 7px;
+    margin-right: 7px;
 }
