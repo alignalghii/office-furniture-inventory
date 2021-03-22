@@ -27,12 +27,12 @@
                 {% endfor %}
             {% endblock %}
 {% if is_granted('ROLE_USER') %}
-        <a href="{{ path('app_logout') }}">Logout</a>
-        {% block profile %}<a href="{{ path('profile_show') }}">Profile</a>{% endblock %}
+        <a class="my" href="{{ path('app_logout') }}">Logout</a>
+        {% block profile %}<a class="my" href="{{ path('profile_show') }}">Profile</a>{% endblock %}
 {% else %}
-        {% block login %}<a href="{{ path('login') }}">Login</a>{% endblock %}
+        {% block login %}<a class="my" href="{{ path('login') }}">Login</a>{% endblock %}
 {% endif %}
-        {% block home %}<a href="{{ path('index') }}">Return home</a>{% endblock %}
+        {% block home %}<a class="my" href="{{ path('index') }}">Return home</a>{% endblock %}
         {% block bodyproper %}
         {% endblock %}
         {% endblock %}

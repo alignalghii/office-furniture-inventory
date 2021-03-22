@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block profile %}{% if not profile %}<a href="{{ path('profile_show') }}">Profile</a>{% endif %}{% endblock %}
+{% block profile %}{% if not profile %}<a class="my" href="{{ path('profile_show') }}">Profile</a>{% endif %}{% endblock %}
 {% block title %}IUser{% endblock %}
 
 {% block bodyproper %}
@@ -36,11 +36,11 @@
     </table>
 
 {% if profile %}
-    <div><a href="{{ path('profile_edit') }}">edit</a></div>
-    {% if not is_granted('ROLE_ADMIN') %}<div>You are allowed also to <a href="{{ path('i_user_new') }}">add (offer) a new user</a>, but admins are entitled to revise at any time</div>{% endif %}
+    <div><a class="my" href="{{ path('profile_edit') }}">edit</a></div>
+    {% if not is_granted('ROLE_ADMIN') %}<div>You are allowed also to <a class="my" href="{{ path('i_user_new') }}">add (offer) a new user</a>, but admins are entitled to revise at any time</div>{% endif %}
 {% else %}
-    <a href="{{ path('i_user_index') }}">back to list</a>
-    <a href="{{ path('i_user_edit', {'id': i_user.id}) }}">edit</a>
+    <a class="my" href="{{ path('i_user_index') }}">back to list</a>
+    <a class="my" href="{{ path('i_user_edit', {'id': i_user.id}) }}">edit</a>
     {{ include('i_user/_delete_form.html.twig') }}
 {% endif %}
 {% endblock %}
