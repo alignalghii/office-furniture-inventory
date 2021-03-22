@@ -37,10 +37,11 @@ security:
         # '/lucky' - No login required for  ,,lucky number'' sample functionality doeas need being admin, but does need to log in at least
         - { path: '^/iuser/$', roles: ROLE_ADMIN } # Listing users is allowed only for admins
         - { path: '^/iuser/new$', roles: ROLE_USER } # adding a new user (probably him/herself) is allowed for any user, but at least a login is required
-        - { path: '^/iuser/edit$', roles: ROLE_USER } # editing a user (probably him/herself) is allowed for any user, but at least a login is required
-        - { path: '^/iuser/delete$', roles: ROLE_USER } # deleting a user (probably him/herself) is allowed for any user, but at least a login is required @TODO only inactivating is specified
+        # - { path: '^/iuser/\d+/edit', roles: ROLE_USER } # editing a user (probably him/herself) is allowed for any user, but at least a login is required
+        - { path: '^/iuser/\d+/delete', roles: ROLE_USER } # deleting a user (probably him/herself) is allowed for any user, but at least a login is required @TODO only inactivating is specified
         - { path: furniture, roles: ROLE_USER } # Any user is allowed to manage furniture, but at least a login is required
         - { path: model, roles: ROLE_USER } # Any user is allowed to manage model, but at least a login is required
+        - { path: profile, roles: ROLE_USER }
 
     encoders:
         App\Entity\IUSer:

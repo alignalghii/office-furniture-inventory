@@ -18,3 +18,15 @@ login:
 app_logout:
     path: /logout
     methods: GET
+
+profile_show:
+    path: /profile-show
+    controller: App\Controller\IUserController::profileShow
+
+profile_edit:
+    path: /profile-edit
+    controller: App\Controller\IUserController::profileEdit
+
+profile_new:
+    path: /profile-new
+    controller: App\Controller\IUserController::profileNew

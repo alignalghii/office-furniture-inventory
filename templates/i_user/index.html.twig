@@ -1,5 +1,6 @@
 {% extends 'base.html.twig' %}
 
+{% block more_stylesheets %}<link rel="stylesheet" href="/css/inline-form.css"/>{% endblock %}
 {% block title %}IUser index{% endblock %}
 
 {% block bodyproper %}
@@ -23,12 +24,13 @@
                 <td>{{ i_user.id }}</td>
                 <td>{{ i_user.name }}</td>
                 <td>{{ i_user.email }}</td>
-                <td>{{ i_user.password }}</td>
+                <td>(encoded)</td>
                 <td>{{ i_user.privilege }}</td>
                 <td>{{ i_user.active ? 'Yes' : 'No' }}</td>
                 <td>
                     <a href="{{ path('i_user_show', {'id': i_user.id}) }}">show</a>
                     <a href="{{ path('i_user_edit', {'id': i_user.id}) }}">edit</a>
+                    {{ include('i_user/_delete_form.html.twig') }}
                 </td>
             </tr>
         {% else %}

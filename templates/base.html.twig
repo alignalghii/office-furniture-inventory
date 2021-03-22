@@ -7,14 +7,17 @@
            and uncomment the following Encore helpers to start using Symfony UX #}
         {% block stylesheets %}
             {#{{ encore_entry_link_tags('app') }}#}
+            <link rel="stylesheet" href="/css/messages.css"/>
+            <link rel="stylesheet" href="/css/form.css"/>
+            <link rel="stylesheet" href="/css/tabular.css"/>
+            <link rel="stylesheet" href="/css/control.css"/>
+            {% block more_stylesheets %}{% endblock %}
         {% endblock %}
-        <link rel="stylesheet" href="/css/messages.css"/>
-        <link rel="stylesheet" href="/css/form.css"/>
 
         {% block javascripts %}
             {#{{ encore_entry_script_tags('app') }}#}
+            <script src="/js/expiring-flash-divs.js"></script>
         {% endblock %}
-        <script src="/js/expiring-flash-divs.js"></script>
     </head>
     <body>
         {% block body %}
@@ -23,9 +26,15 @@
                     <div class="flash-note">{{ message }}</div>
                 {% endfor %}
             {% endblock %}
-            {% block home %}<a href="{{ path('index') }}">Return home</a>{% endblock %}
-            {% block bodyproper %}
-            {% endblock %}
+{% if is_granted('ROLE_USER') %}
+        <a href="{{ path('app_logout') }}">Logout</a>
+        {% block profile %}<a href="{{ path('profile_show') }}">Profile</a>{% endblock %}
+{% else %}
+        {% block login %}<a href="{{ path('login') }}">Login</a>{% endblock %}
+{% endif %}
+        {% block home %}<a href="{{ path('index') }}">Return home</a>{% endblock %}
+        {% block bodyproper %}
+        {% endblock %}
         {% endblock %}
     </body>
 </html>

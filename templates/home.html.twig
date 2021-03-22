@@ -6,9 +6,14 @@
 
 {% block bodyproper %}
         <h1>Office furniture inventory</h1>
+
+{% if is_granted('ROLE_USER') %}
         <ul>
-            <li><a href="{{ path('i_user_index') }}">IUser</a></li>
             <li><a href="{{ path('model_index') }}">Model</a></li>
             <li><a href="{{ path('furniture_index') }}">Furniture</a></li>
+{% if is_granted('ROLE_ADMIN') %}
+            <li><a href="{{ path('i_user_index') }}">IUser</a></li>
+{% endif %}
         </ul>
+{% endif %}
 {% endblock %}

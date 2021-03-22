@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * @Route("/iuser")
@@ -28,7 +29,7 @@ class IUserController extends AbstractController
     /**
      * @Route("/new", name="i_user_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
     {
         $iUser = new IUser();
         $form = $this->createForm(IUserType::class, $iUser);
@@ -36,6 +37,12 @@ class IUserController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
+            $iUser->setPassword(
+                $passwordEncoder->encodePassword(
+                    $iUser,
+                    $iUser->getPassword()
+                )
+            );
             $entityManager->persist($iUser);
             $entityManager->flush();
 
@@ -55,18 +62,30 @@ class IUserController extends AbstractController
     {
         return $this->render('i_user/show.html.twig', [
             'i_user' => $iUser,
+            'profile' => false
         ]);
     }
 
     /**
      * @Route("/{id}/edit", name="i_user_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, IUser $iUser): Response
+    public function edit(Request $request, IUser $iUser, UserPasswordEncoderInterface $passwordEncoder): Response
     {
-        $form = $this->createForm(IUserType::class, $iUser);
+        $encodedOldPassword = $iUser->getPassword();
+        $iUser->setPassword('0');
+            $form = $this->createForm(IUserType::class, $iUser,  ['attr' => ['data-keepable-password' => 'Change password (or write 0 to keep)']]);
+        $iUser->setPassword($encodedOldPassword);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $userGivenNewPassword = $iUser->getPassword();
+            $iUser->setPassword(
+                $userGivenNewPassword
+                    ? $passwordEncoder->encodePassword($iUser, $userGivenNewPassword)
+                    : $encodedOldPassword
+            );
+
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('i_user_index');
@@ -75,6 +94,7 @@ class IUserController extends AbstractController
         return $this->render('i_user/edit.html.twig', [
             'i_user' => $iUser,
             'form' => $form->createView(),
+            'profile' => false
         ]);
     }
 
@@ -91,4 +111,64 @@ class IUserController extends AbstractController
 
         return $this->redirectToRoute('i_user_index');
     }
+
+    public function profileShow(): Response
+    {
+        $iUser = $this->getUser();
+        return $this->render('i_user/show.html.twig', [
+            'i_user' => $iUser,
+            'profile' => true
+        ]);
+    }
+
+    public function profileEdit(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
+    {
+        $iUser = $this->getUser();
+        $encodedOldPassword = $iUser->getPassword();
+        $iUser->setPassword('0');
+            $form = $this->createForm(IUserType::class, $iUser, ['attr' => ['data-keepable-password' => 'Change password (or write 0 to keep)']]);
+        $iUser->setPassword($encodedOldPassword);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $userGivenNewPassword = $iUser->getPassword();
+            $iUser->setPassword(
+                $userGivenNewPassword
+                    ? $passwordEncoder->encodePassword($iUser, $userGivenNewPassword)
+                    : $encodedOldPassword
+            );
+
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('profile_show');
+        }
+
+        return $this->render('i_user/edit.html.twig', [
+            'i_user' => $this->getUser(),
+            'form' => $form->createView(),
+            'profile' => true
+        ]);
+    }
+
+    public function profileNew(Request $request): Response
+    {
+        $iUser = new IUser();
+        $form = $this->createForm(IUserType::class, $iUser);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($iUser);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('i_user_index');
+        }
+
+        return $this->render('i_user/new.html.twig', [
+            'i_user' => $iUser,
+            'form' => $form->createView(),
+        ]);
+    }
+
 }

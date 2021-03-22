@@ -127,7 +127,7 @@ class IUser implements UserInterface
      */
     public function getRoles(): array
     {
-        return [$this->getPrivilege() == 'admin' ? 'ROLE_ADMIN' : 'ROLE_USER'];//array_unique($roles);
+        return $this->getPrivilege() == 'admin' ? ['ROLE_USER', 'ROLE_ADMIN'] : ['ROLE_USER'];
     }
 
     public function setRoles(array $roles): self
